@@ -10,6 +10,15 @@
   "monorepo": true,
   "root": "apps/order-service",
   "projects": {
+    "common": {
+      "type": "application",
+      "root": "apps/common",
+      "entryFile": "main",
+      "sourceRoot": "apps/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/common/tsconfig.app.json"
+      }
+    },
     "order-service": {
       "type": "application",
       "root": "apps/order-service",
