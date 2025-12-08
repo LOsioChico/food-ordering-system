@@ -4,5 +4,6 @@ import { OrderApplicationServiceModule } from './order-application-service/order
 
 @Module({
   imports: [OrderDomainCoreModule, OrderApplicationServiceModule],
+  exports: [OrderDomainCoreModule, OrderApplicationServiceModule],
 })
 export class OrderDomainModule {}
