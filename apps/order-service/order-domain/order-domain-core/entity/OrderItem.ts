@@ -5,11 +5,25 @@ import { Product } from './Product';
 import { Money } from 'apps/common/src/domain/value-object/Money';
 
 export class OrderItem extends BaseEntity<OrderItemId> {
-  private readonly orderId: OrderId;
+  private orderId: OrderId;
   private readonly product: Product;
   private readonly quantity: number;
   private readonly price: Money;
   private readonly subTotal: Money;
+  is: any;
+
+  public initializeOrder(orderId: OrderId, orderItemId: OrderItemId): void {
+    this.orderId = orderId;
+    super.setId(orderItemId);
+  }
+
+  public isPriceValid(): boolean {
+    return (
+      this.price.isGreaterThanZero() &&
+      this.price.equals(this.product.getPrice()) &&
+      this.price.multiply(this.quantity).equals(this.subTotal)
+    );
+  }
 
   constructor(orderItemBuilder: OrderItemBuilder) {
     super(orderItemBuilder.getOrderItemId());

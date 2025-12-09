@@ -7,6 +7,9 @@ import { OrderItem } from './OrderItem';
 import { TrackingId } from '../value-object/TrackingId';
 import { OrderStatus } from 'apps/common/src/domain/value-object/OrderStatus';
 import { OrderId } from 'apps/common/src/domain/value-object/OrderId';
+import { randomUUID } from 'node:crypto';
+import { OrderItemId } from '../value-object/OrderItemId';
+import { OrderDomainException } from '../exception/OrderDomainException';
 
 export class Order extends AggregateRoot<OrderId> {
   private readonly customerId: CustomerId;
@@ -18,6 +21,62 @@ export class Order extends AggregateRoot<OrderId> {
   private trackingId: TrackingId;
   private orderStatus: OrderStatus;
   private failureMessages: string[];
+
+  public initializeOrder(): void {
+    this.setId(new OrderId(randomUUID()));
+    this.trackingId = new TrackingId(randomUUID());
+    this.orderStatus = OrderStatus.PENDING;
+    this.initializeOrderItems();
+  }
+
+  public validateOrder(): void {
+    this.validateInitialOrder();
+    this.validateTotalPrice();
+    this.validateItemsPrice();
+  }
+
+  private validateInitialOrder(): void {
+    if (this.orderStatus != null || this.getId() != null) {
+      throw new OrderDomainException(
+        'Order is not in correct state for initialization!',
+      );
+    }
+  }
+
+  private validateTotalPrice(): void {
+    if (this.price == null || !this.price.isGreaterThanZero()) {
+      throw new OrderDomainException('Total price must be greater than zero!');
+    }
+  }
+  private validateItemsPrice(): void {
+    const orderItemsTotal = this.items
+      .map((orderItem) => {
+        this.validateItemPrice(orderItem);
+        return orderItem.getSubTotal();
+      })
+      .reduce((prev, curr) => prev.add(curr), Money.ZERO);
+
+    if (this.price.equals(orderItemsTotal)) {
+      throw new OrderDomainException(
+        `Total price: ${this.price.getAmount().toString()} is not equal to Order items total: ${orderItemsTotal.getAmount().toString()}!`,
+      );
+    }
+  }
+
+  private validateItemPrice(orderItem: OrderItem): void {
+    if (!orderItem.isPriceValid()) {
+      throw new OrderDomainException(
+        `Order item price: ${orderItem.getPrice().getAmount().toString()} is not valid for product ${orderItem.getProduct().getId().getValue()}`,
+      );
+    }
+  }
+
+  private initializeOrderItems(): void {
+    let itemId = 1;
+    for (const orderItem of this.items) {
+      orderItem.initializeOrder(super.getId(), new OrderItemId(itemId++));
+    }
+  }
 
   constructor(orderBuilder: OrderBuilder) {
     super(orderBuilder.getOrderId());

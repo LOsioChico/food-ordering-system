@@ -1,6 +1,8 @@
 import { Decimal as BigDecimal } from 'decimal.js';
 
 export class Money {
+  public static readonly ZERO = new Money(BigDecimal(0));
+
   constructor(private readonly amount: BigDecimal) {
     BigDecimal.set({
       precision: 2,
