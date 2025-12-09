@@ -5,6 +5,7 @@ import { OrderItem } from './OrderItem';
 import { OrderAddress } from './OrderAddress';
 
 type CreateOrderCommandProps = {
+  customerId: UUID;
   restaurantId: UUID;
   price: BigDecimal;
   items: OrderItem[];
@@ -12,6 +13,9 @@ type CreateOrderCommandProps = {
 };
 
 export class CreateOrderCommand {
+  @IsNotEmpty()
+  private readonly customerId: UUID;
+
   @IsNotEmpty()
   private readonly restaurantId: UUID;
 
@@ -27,10 +31,15 @@ export class CreateOrderCommand {
   private readonly address: OrderAddress;
 
   constructor(props: CreateOrderCommandProps) {
+    this.customerId = props.customerId;
     this.restaurantId = props.restaurantId;
     this.price = props.price;
     this.items = props.items;
     this.address = props.address;
+  }
+
+  public getCustomerId(): UUID {
+    return this.customerId;
   }
 
   public getRestaurantId(): UUID {
