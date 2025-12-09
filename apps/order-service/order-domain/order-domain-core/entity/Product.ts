@@ -9,13 +9,18 @@ type ProductProps = {
 };
 
 export class Product extends BaseEntity<ProductId> {
-  private readonly name: string;
-  private readonly price: Money;
+  private name: string;
+  private price: Money;
 
   constructor(state: ProductProps) {
     super(state.productId);
     this.name = state.name;
     this.price = state.price;
+  }
+
+  public updateWithConfirmedNameAndPrice(name: string, price: Money): void {
+    this.name = name;
+    this.price = price;
   }
 
   public getName(): string {

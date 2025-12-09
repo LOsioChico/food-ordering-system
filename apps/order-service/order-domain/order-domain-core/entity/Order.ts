@@ -48,6 +48,11 @@ export class Order extends AggregateRoot<OrderId> {
     this.initializeOrderItems();
   }
 
+  public validateOrder() {
+    this.validateTotalPrice();
+    this.validateItemsPrice();
+  }
+
   public pay(): void {
     if (this.orderStatus != OrderStatus.PENDING) {
       throw new OrderDomainException({
