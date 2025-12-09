@@ -1,7 +1,12 @@
 import { Order } from 'apps/order-service/order-domain/order-domain-core/entity/Order';
 import { TrackingId } from 'apps/order-service/order-domain/order-domain-core/value-object/TrackingId';
+import { EntityManager } from 'typeorm';
 
 export interface OrderRepository {
-  save(order: Order): Promise<Order>;
+  saveWithManager(manager: EntityManager, order: Order): Promise<Order>;
   findByTrackingId(trackingId: TrackingId): Order | undefined;
+  findByTrackingIdWithManager(
+    manager: EntityManager,
+    trackingId: TrackingId,
+  ): Promise<Order | undefined>;
 }

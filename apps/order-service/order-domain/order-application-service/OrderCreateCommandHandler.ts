@@ -6,7 +6,7 @@ import type { OrderRepository } from './domain/ports/output/repository/OrderRepo
 import type { CustomerRepository } from './domain/ports/output/repository/CustomerRepository';
 import type { RestaurantRepository } from './domain/ports/output/repository/RestaurantRepository';
 import { OrderDataMapper } from './domain/mapper/OrderDataMapper';
-import { DataSource } from 'typeorm';
+import { DataSource, EntityManager } from 'typeorm';
 import { UUID } from 'node:crypto';
 import { Customer } from '../order-domain-core/entity/Customer';
 import { OrderDomainException } from '../order-domain-core/exception/OrderDomainException';
@@ -29,40 +29,56 @@ export class OrderCreateCommandHandler {
   public async createOrder(
     createOrderCommand: CreateOrderCommand,
   ): Promise<CreateOrderResponse> {
-    return await this.dataSource.transaction(async (manager) => {
-      this.checkCustomer(createOrderCommand.getCustomerId());
-      const restaurant = this.checkRestaurant(createOrderCommand);
-      const order =
-        this.orderDataMapper.createOrderCommandToOrder(createOrderCommand);
-      const orderCreatedEvent =
+    return await this.dataSource.transaction<CreateOrderResponse>(
+      async (manager) => {
+        await this.checkCustomer(manager, createOrderCommand.getCustomerId());
+        const restaurant = await this.checkRestaurant(
+          manager,
+          createOrderCommand,
+        );
+        const order =
+          this.orderDataMapper.createOrderCommandToOrder(createOrderCommand);
         this.orderDomainService.validateAndInitiateOrder(order, restaurant);
 
-      const orderResult = await this.saveOrder(order);
-      this.logger.log(
-        `Order is created with id: ${orderResult.getId().getValue()}`,
-      );
-      return this.orderDataMapper.orderToCreateOrderResponse(orderResult);
-    });
+        const orderResult = await this.saveOrder(manager, order);
+        this.logger.log(
+          `Order is created with id: ${orderResult.getId().getValue()}`,
+        );
+        return this.orderDataMapper.orderToCreateOrderResponse(orderResult);
+      },
+    );
   }
 
-  private checkRestaurant(createOrderCommand: CreateOrderCommand): Restaurant {
+  private async checkRestaurant(
+    manager: EntityManager,
+    createOrderCommand: CreateOrderCommand,
+  ): Promise<Restaurant> {
     const [restaurantId] =
       this.orderDataMapper.createOrderCommandToRestaurant(createOrderCommand);
     const restaurant =
-      this.restaurantRespository.findRestaurantInformation(restaurantId);
+      await this.restaurantRespository.findRestaurantInformationWithManager(
+        manager,
+        restaurantId,
+      );
     if (!restaurant) {
       this.logger.warn(
-        `Could not find restaurant with restaurant id: ${createOrderCommand.getCustomerId()}`,
+        `Could not find restaurant with restaurant id: ${createOrderCommand.getRestaurantId()}`,
       );
       throw new OrderDomainException({
-        message: `Could not find restaurant with restaurant id: ${createOrderCommand.getCustomerId()}`,
+        message: `Could not find restaurant with restaurant id: ${createOrderCommand.getRestaurantId()}`,
       });
     }
     return restaurant;
   }
 
-  private checkCustomer(customerId: UUID): Customer {
-    const customer = this.customerRepository.findCustomer(customerId);
+  private async checkCustomer(
+    manager: EntityManager,
+    customerId: UUID,
+  ): Promise<Customer> {
+    const customer = await this.customerRepository.findCustomerWithManager(
+      manager,
+      customerId,
+    );
     if (!customer) {
       this.logger.warn(
         `Could not find customer with customer id: ${customerId}`,
@@ -74,8 +90,14 @@ export class OrderCreateCommandHandler {
     return customer;
   }
 
-  private async saveOrder(order: Order): Promise<Order> {
-    const orderResult = await this.orderRepository.save(order);
+  private async saveOrder(
+    manager: EntityManager,
+    order: Order,
+  ): Promise<Order> {
+    const orderResult = await this.orderRepository.saveWithManager(
+      manager,
+      order,
+    );
     if (!orderResult) {
       throw new OrderDomainException({ message: 'Could not save order!' });
     }
