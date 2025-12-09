@@ -50,29 +50,28 @@ export class Order extends AggregateRoot<OrderId> {
 
   public pay(): void {
     if (this.orderStatus != OrderStatus.PENDING) {
-      throw new OrderDomainException(
-        'Order is not correct state for pay operation!',
-      );
+      throw new OrderDomainException({
+        message: 'Order is not correct state for pay operation!',
+      });
     }
     this.orderStatus = OrderStatus.PAID;
   }
 
   public approve(): void {
     if (this.orderStatus != OrderStatus.PAID) {
-      throw new OrderDomainException(
-        'Order is not in correct state for approve operation!',
-      );
+      throw new OrderDomainException({
+        message: 'Order is not in correct state for approve operation!',
+      });
     }
     this.orderStatus = OrderStatus.APPROVED;
   }
 
   public initCancel(failureMessages: string[]): void {
     if (this.orderStatus != OrderStatus.PAID) {
-      throw new OrderDomainException(
-        'Order is not in correct state for initCancel operation!',
-      );
+      throw new OrderDomainException({
+        message: 'Order is not in correct state for initCancel operation!',
+      });
     }
-    this.orderStatus = OrderStatus.CANCELLING;
     this.updateFailureMessages(failureMessages);
   }
 
@@ -83,9 +82,9 @@ export class Order extends AggregateRoot<OrderId> {
         this.orderStatus == OrderStatus.PENDING
       )
     ) {
-      throw new OrderDomainException(
-        'Order is not in correct state for cancel operation!',
-      );
+      throw new OrderDomainException({
+        message: 'Order is not in correct state for cancel operation!',
+      });
     }
     this.orderStatus = OrderStatus.CANCELLED;
     this.updateFailureMessages(failureMessages);
@@ -98,7 +97,9 @@ export class Order extends AggregateRoot<OrderId> {
 
   private validateTotalPrice(): void {
     if (!this.price.isGreaterThanZero()) {
-      throw new OrderDomainException('Total price must be greater than zero!');
+      throw new OrderDomainException({
+        message: 'Total price must be greater than zero!',
+      });
     }
   }
 
@@ -111,17 +112,17 @@ export class Order extends AggregateRoot<OrderId> {
       .reduce((prev, curr) => prev.add(curr), Money.ZERO);
 
     if (!this.price.equals(orderItemsTotal)) {
-      throw new OrderDomainException(
-        `Total price: ${this.price.getAmount().toString()} is not equal to Order items total: ${orderItemsTotal.getAmount().toString()}!`,
-      );
+      throw new OrderDomainException({
+        message: `Total price: ${this.price.getAmount().toString()} is not equal to Order items total: ${orderItemsTotal.getAmount().toString()}!`,
+      });
     }
   }
 
   private validateItemPrice(orderItem: OrderItem): void {
     if (!orderItem.isPriceValid()) {
-      throw new OrderDomainException(
-        `Order item price: ${orderItem.getPrice().getAmount().toString()} is not valid for product ${orderItem.getProduct().getId().getValue()}`,
-      );
+      throw new OrderDomainException({
+        message: `Order item price: ${orderItem.getPrice().getAmount().toString()} is not valid for product ${orderItem.getProduct().getId().getValue()}`,
+      });
     }
   }
 

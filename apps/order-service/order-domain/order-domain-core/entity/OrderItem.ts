@@ -46,9 +46,9 @@ export class OrderItem extends BaseEntity<OrderItemId> {
 
   private validatePriceConsistency(): void {
     if (!this.isPriceValid()) {
-      throw new OrderDomainException(
-        'Order item price/quantity/subtotal is inconsistent.',
-      );
+      throw new OrderDomainException({
+        message: 'Order item price/quantity/subtotal is inconsistent.',
+      });
     }
   }
 

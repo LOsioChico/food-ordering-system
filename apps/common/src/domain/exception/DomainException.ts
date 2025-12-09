@@ -1,19 +1,23 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
+type DomainExceptionProps = {
+  message: string;
+  statusCode?: HttpStatus;
+  cause?: Error;
+};
+
+const DEFAULT_STATUS_CODE = HttpStatus.BAD_REQUEST;
+
 export class DomainException extends HttpException {
-  constructor(
-    message: string,
-    statusCode: HttpStatus = HttpStatus.BAD_REQUEST,
-    cause?: Error,
-  ) {
+  constructor(state: DomainExceptionProps) {
     super(
       {
-        message,
-        cause,
+        message: state.message,
+        cause: state.cause,
       },
-      statusCode,
+      state.statusCode ?? DEFAULT_STATUS_CODE,
       {
-        cause,
+        cause: state.cause,
       },
     );
   }
