@@ -1,4 +1,4 @@
-import { DomainEvent } from 'apps/common/src/domain/event/DomainEvent';
+import { DomainEvent } from 'apps/common/common-domain/event/DomainEvent';
 import { Order } from '../entity/Order';
 
 abstract class OrderEvent implements DomainEvent<Order> {

@@ -1,5 +1,5 @@
-import { AggregateRoot } from 'apps/common/src/domain/entity/AggregateRoot';
-import { RestaurantId } from 'apps/common/src/domain/value-object/RestaurantId';
+import { AggregateRoot } from 'apps/common/common-domain/entity/AggregateRoot';
+import { RestaurantId } from 'apps/common/common-domain/value-object/RestaurantId';
 import { Product } from './Product';
 
 type RestaurantProps = {

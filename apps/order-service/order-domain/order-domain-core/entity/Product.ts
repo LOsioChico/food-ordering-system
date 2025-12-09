@@ -1,6 +1,6 @@
-import { BaseEntity } from 'apps/common/src/domain/entity/BaseEntity';
-import { Money } from 'apps/common/src/domain/value-object/Money';
-import { ProductId } from 'apps/common/src/domain/value-object/ProductId';
+import { BaseEntity } from 'apps/common/common-domain/entity/BaseEntity';
+import { Money } from 'apps/common/common-domain/value-object/Money';
+import { ProductId } from 'apps/common/common-domain/value-object/ProductId';
 
 type ProductProps = {
   productId: ProductId;

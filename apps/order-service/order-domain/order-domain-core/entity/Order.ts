@@ -1,11 +1,11 @@
-import { AggregateRoot } from 'apps/common/src/domain/entity/AggregateRoot';
-import { CustomerId } from 'apps/common/src/domain/value-object/CustomerId';
-import { Money } from 'apps/common/src/domain/value-object/Money';
-import { OrderStatus } from 'apps/common/src/domain/value-object/OrderStatus';
-import { RestaurantId } from 'apps/common/src/domain/value-object/RestaurantId';
+import { AggregateRoot } from 'apps/common/common-domain/entity/AggregateRoot';
+import { CustomerId } from 'apps/common/common-domain/value-object/CustomerId';
+import { Money } from 'apps/common/common-domain/value-object/Money';
+import { OrderStatus } from 'apps/common/common-domain/value-object/OrderStatus';
+import { RestaurantId } from 'apps/common/common-domain/value-object/RestaurantId';
 import { OrderDomainException } from '../exception/OrderDomainException';
 import { OrderItem } from './OrderItem';
-import { OrderId } from 'apps/common/src/domain/value-object/OrderId';
+import { OrderId } from 'apps/common/common-domain/value-object/OrderId';
 import { OrderItemId } from '../value-object/OrderItemId';
 import { StreetAddress } from '../value-object/StreetAddress';
 import { TrackingId } from '../value-object/TrackingId';

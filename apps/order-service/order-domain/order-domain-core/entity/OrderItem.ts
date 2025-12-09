@@ -1,6 +1,6 @@
-import { BaseEntity } from 'apps/common/src/domain/entity/BaseEntity';
-import { OrderId } from 'apps/common/src/domain/value-object/OrderId';
-import { Money } from 'apps/common/src/domain/value-object/Money';
+import { BaseEntity } from 'apps/common/common-domain/entity/BaseEntity';
+import { OrderId } from 'apps/common/common-domain/value-object/OrderId';
+import { Money } from 'apps/common/common-domain/value-object/Money';
 import { OrderDomainException } from '../exception/OrderDomainException';
 import { OrderItemId } from '../value-object/OrderItemId';
 import { Product } from './Product';
