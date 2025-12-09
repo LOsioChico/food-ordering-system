@@ -23,7 +23,7 @@ type OrderProps = {
 export class Order extends AggregateRoot<OrderId> {
   private readonly customerId: CustomerId;
   private readonly restaurantId: RestaurantId;
-  private readonly streetAddress: StreetAddress;
+  private readonly deliveryAddress: StreetAddress;
   private readonly price: Money;
   private readonly items: OrderItem[];
   private readonly failureMessages: string[];
@@ -35,7 +35,7 @@ export class Order extends AggregateRoot<OrderId> {
     super(new OrderId(randomUUID()));
     this.customerId = state.customerId;
     this.restaurantId = state.restaurantId;
-    this.streetAddress = state.streetAddress;
+    this.deliveryAddress = state.streetAddress;
     this.price = state.price;
     this.items = state.items;
     this.failureMessages = state.failureMessages;
@@ -147,7 +147,7 @@ export class Order extends AggregateRoot<OrderId> {
   }
 
   public getStreetAddress(): StreetAddress {
-    return this.streetAddress;
+    return this.deliveryAddress;
   }
 
   public getPrice(): Money {
