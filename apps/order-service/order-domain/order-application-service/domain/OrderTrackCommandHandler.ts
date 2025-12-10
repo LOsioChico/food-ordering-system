@@ -1,12 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { TrackOrderQuery } from './domain/dto/track/TrackOrderQuery';
-import { TrackOrderResponse } from './domain/dto/track/TrackOrderResponse';
-import { OrderDataMapper } from './domain/mapper/OrderDataMapper';
-import type { OrderRepository } from './domain/ports/output/repository/OrderRepository';
+import { TrackOrderQuery } from './dto/track/TrackOrderQuery';
+import { TrackOrderResponse } from './dto/track/TrackOrderResponse';
+import { OrderDataMapper } from './mapper/OrderDataMapper';
+import type { OrderRepository } from './ports/output/repository/OrderRepository';
 import { DataSource } from 'typeorm';
-import { TrackingId } from '../order-domain-core/value-object/TrackingId';
-import { OrderDomainException } from '../order-domain-core/exception/OrderDomainException';
-import { OrderNotFoundException } from '../order-domain-core/exception/OrderNotFoundException';
+import { TrackingId } from '../../order-domain-core/domain/value-object/TrackingId';
+import { OrderNotFoundException } from '../../order-domain-core/domain/exception/OrderNotFoundException';
 
 @Injectable()
 export class OrderTrackCommandHandler {

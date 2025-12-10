@@ -4,7 +4,7 @@ import { OrderApplicationModule } from '../order-application/order-application.m
 import { OrderDataAccessModule } from '../order-data-access/order-data-access.module';
 import { LoggerModule } from 'nestjs-pino';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Order } from '../order-domain/order-domain-core/entity/Order';
+import { Order } from '../order-domain/order-domain-core/domain/entity/Order';
 
 @Module({
   imports: [

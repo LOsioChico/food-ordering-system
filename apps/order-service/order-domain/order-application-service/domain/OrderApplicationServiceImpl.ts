@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateOrderCommand } from './domain/dto/create/CreateOrderCommand';
-import { CreateOrderResponse } from './domain/dto/create/CreateOrderResponse';
-import { TrackOrderQuery } from './domain/dto/track/TrackOrderQuery';
-import { TrackOrderResponse } from './domain/dto/track/TrackOrderResponse';
-import { OrderApplicationService } from './domain/ports/input/service/OrderApplicationService';
+import { CreateOrderCommand } from './dto/create/CreateOrderCommand';
+import { CreateOrderResponse } from './dto/create/CreateOrderResponse';
+import { TrackOrderQuery } from './dto/track/TrackOrderQuery';
+import { TrackOrderResponse } from './dto/track/TrackOrderResponse';
+import { OrderApplicationService } from './ports/input/service/OrderApplicationService';
 import { OrderCreateCommandHandler } from './OrderCreateCommandHandler';
 import { OrderTrackCommandHandler } from './OrderTrackCommandHandler';
 
@@ -16,11 +16,15 @@ export class OrderApplicationServiceImpl implements OrderApplicationService {
     private readonly orderTrackCommandHandler: OrderTrackCommandHandler,
   ) {}
 
-  createOrder(createOrderCommand: CreateOrderCommand): CreateOrderResponse {
+  async createOrder(
+    createOrderCommand: CreateOrderCommand,
+  ): Promise<CreateOrderResponse> {
     return this.orderCreateCommandHandler.createOrder(createOrderCommand);
   }
 
-  trackOrder(trackOrderQuery: TrackOrderQuery): TrackOrderResponse {
+  async trackOrder(
+    trackOrderQuery: TrackOrderQuery,
+  ): Promise<TrackOrderResponse> {
     return this.orderTrackCommandHandler.trackOrder(trackOrderQuery);
   }
 }

@@ -4,6 +4,8 @@ import { TrackOrderQuery } from '../../../dto/track/TrackOrderQuery';
 import { TrackOrderResponse } from '../../../dto/track/TrackOrderResponse';
 
 export interface OrderApplicationService {
-  createOrder(createOrderCommand: CreateOrderCommand): CreateOrderResponse;
-  trackOrder(trackOrderQuery: TrackOrderQuery): TrackOrderResponse;
+  createOrder(
+    createOrderCommand: CreateOrderCommand,
+  ): Promise<CreateOrderResponse>;
+  trackOrder(trackOrderQuery: TrackOrderQuery): Promise<TrackOrderResponse>;
 }

@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { RestaurantApprovalResponse } from './domain/dto/message/RestaurantApprovalResponse';
-import { RestaurantApprovalResponseMessageListener } from './domain/ports/input/message/listener/restaurant-approval/RestaurantApprovalResponseMessageListener';
+import { RestaurantApprovalResponse } from './dto/message/RestaurantApprovalResponse';
+import { RestaurantApprovalResponseMessageListener } from './ports/input/message/listener/restaurant-approval/RestaurantApprovalResponseMessageListener';
 
 @Injectable()
 export class RestaurantApprovalResponseMessageListenerImpl implements RestaurantApprovalResponseMessageListener {

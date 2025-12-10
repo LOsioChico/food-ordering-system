@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateOrderResponse } from './domain/dto/create/CreateOrderResponse';
-import { CreateOrderCommand } from './domain/dto/create/CreateOrderCommand';
-import { OrderDataMapper } from './domain/mapper/OrderDataMapper';
+import { CreateOrderResponse } from './dto/create/CreateOrderResponse';
+import { CreateOrderCommand } from './dto/create/CreateOrderCommand';
+import { OrderDataMapper } from './mapper/OrderDataMapper';
 import { OrderCreateHelper } from './OrderCreateHelper';
-import type { OrderCreatedPaymentRequestMessagePublisher } from './domain/ports/output/message/publisher/payment/OrderCreatedPaymentRequest';
+import type { OrderCreatedPaymentRequestMessagePublisher } from './ports/output/message/publisher/payment/OrderCreatedPaymentRequest';
 
 @Injectable()
 export class OrderCreateCommandHandler {

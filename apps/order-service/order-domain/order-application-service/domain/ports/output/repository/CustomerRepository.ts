@@ -1,4 +1,4 @@
-import { Customer } from 'apps/order-service/order-domain/order-domain-core/entity/Customer';
+import { Customer } from 'apps/order-service/order-domain/order-domain-core/domain/entity/Customer';
 import { UUID } from 'node:crypto';
 import { EntityManager } from 'typeorm';
 

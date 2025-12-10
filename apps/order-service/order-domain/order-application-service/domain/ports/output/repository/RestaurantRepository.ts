@@ -1,5 +1,5 @@
 import { RestaurantId } from 'apps/common/common-domain/value-object/RestaurantId';
-import { Restaurant } from 'apps/order-service/order-domain/order-domain-core/entity/Restaurant';
+import { Restaurant } from 'apps/order-service/order-domain/order-domain-core/domain/entity/Restaurant';
 import { EntityManager } from 'typeorm';
 
 export interface RestaurantRepository {

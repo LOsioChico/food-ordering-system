@@ -1,5 +1,5 @@
-import { Order } from 'apps/order-service/order-domain/order-domain-core/entity/Order';
-import { TrackingId } from 'apps/order-service/order-domain/order-domain-core/value-object/TrackingId';
+import { Order } from 'apps/order-service/order-domain/order-domain-core/domain/entity/Order';
+import { TrackingId } from 'apps/order-service/order-domain/order-domain-core/domain/value-object/TrackingId';
 import { EntityManager } from 'typeorm';
 
 export interface OrderRepository {

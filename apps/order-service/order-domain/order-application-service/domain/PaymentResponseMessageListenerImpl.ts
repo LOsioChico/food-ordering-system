@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { PaymentResponseMessageListener } from './domain/ports/input/message/listener/payment/PaymentResponseMessageListener';
-import { PaymentResponse } from './domain/dto/message/PaymentResponse';
+import { PaymentResponseMessageListener } from './ports/input/message/listener/payment/PaymentResponseMessageListener';
+import { PaymentResponse } from './dto/message/PaymentResponse';
 
 @Injectable()
 export class PaymentResponseMessageListenerImpl implements PaymentResponseMessageListener {
