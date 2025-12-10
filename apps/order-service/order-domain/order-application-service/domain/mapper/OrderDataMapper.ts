@@ -14,6 +14,7 @@ import { OrderId } from 'apps/common/common-domain/value-object/OrderId';
 import { OrderAddress } from '../dto/create/OrderAddress';
 import { OrderItem } from '../dto/create/OrderItem';
 import { CreateOrderResponse } from '../dto/create/CreateOrderResponse';
+import { TrackOrderResponse } from '../dto/track/TrackOrderResponse';
 
 @Injectable()
 export class OrderDataMapper {
@@ -45,6 +46,14 @@ export class OrderDataMapper {
       orderTrackingId: order.getTrackingId().getValue(),
       orderStatus: order.getOrderStatus(),
       message: '',
+    });
+  }
+
+  public orderToTrackOrderResponse(order: Order): TrackOrderResponse {
+    return new TrackOrderResponse({
+      orderTrackingId: order.getTrackingId().getValue(),
+      orderStatus: order.getOrderStatus(),
+      failureMessages: order.getFailureMessages(),
     });
   }
 

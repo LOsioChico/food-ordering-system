@@ -4,7 +4,6 @@ import { EntityManager } from 'typeorm';
 
 export interface OrderRepository {
   saveWithManager(manager: EntityManager, order: Order): Promise<Order>;
-  findByTrackingId(trackingId: TrackingId): Order | undefined;
   findByTrackingIdWithManager(
     manager: EntityManager,
     trackingId: TrackingId,
