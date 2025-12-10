@@ -43,11 +43,14 @@ export class OrderDataMapper {
     });
   }
 
-  public orderToCreateOrderResponse(order: Order): CreateOrderResponse {
+  public orderToCreateOrderResponse(
+    order: Order,
+    message: string,
+  ): CreateOrderResponse {
     return new CreateOrderResponse({
       orderTrackingId: order.getTrackingId().getValue(),
       orderStatus: order.getOrderStatus(),
-      message: '',
+      message,
     });
   }
 

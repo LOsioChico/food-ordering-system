@@ -26,6 +26,7 @@ export class OrderCreateCommandHandler {
     this.orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
     return this.orderDataMapper.orderToCreateOrderResponse(
       orderCreatedEvent.getOrder(),
+      'Order Created Successfully',
     );
   }
 }
