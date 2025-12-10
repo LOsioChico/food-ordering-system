@@ -16,13 +16,13 @@ export class OrderApplicationServiceImpl implements OrderApplicationService {
     private readonly orderTrackCommandHandler: OrderTrackCommandHandler,
   ) {}
 
-  async createOrder(
+  public async createOrder(
     createOrderCommand: CreateOrderCommand,
   ): Promise<CreateOrderResponse> {
     return this.orderCreateCommandHandler.createOrder(createOrderCommand);
   }
 
-  async trackOrder(
+  public async trackOrder(
     trackOrderQuery: TrackOrderQuery,
   ): Promise<TrackOrderResponse> {
     return this.orderTrackCommandHandler.trackOrder(trackOrderQuery);

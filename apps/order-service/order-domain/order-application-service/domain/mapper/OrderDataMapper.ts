@@ -18,7 +18,7 @@ import { TrackOrderResponse } from '../dto/track/TrackOrderResponse';
 
 @Injectable()
 export class OrderDataMapper {
-  createOrderCommandToRestaurant(
+  public createOrderCommandToRestaurant(
     createOrderCommand: CreateOrderCommand,
   ): [RestaurantId, ProductId[]] {
     const restaurantId = new RestaurantId(createOrderCommand.getRestaurantId());
@@ -28,7 +28,9 @@ export class OrderDataMapper {
     return [restaurantId, productIds];
   }
 
-  createOrderCommandToOrder(createOrderCommand: CreateOrderCommand): Order {
+  public createOrderCommandToOrder(
+    createOrderCommand: CreateOrderCommand,
+  ): Order {
     return new Order({
       customerId: new CustomerId(createOrderCommand.getCustomerId()),
       restaurantId: new RestaurantId(createOrderCommand.getRestaurantId()),

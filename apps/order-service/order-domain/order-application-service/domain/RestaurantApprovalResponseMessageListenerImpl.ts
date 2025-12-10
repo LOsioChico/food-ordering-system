@@ -8,11 +8,15 @@ export class RestaurantApprovalResponseMessageListenerImpl implements Restaurant
     RestaurantApprovalResponseMessageListenerImpl.name,
   );
 
-  orderApproved(restaurantApprovalResponse: RestaurantApprovalResponse): void {
+  public orderApproved(
+    restaurantApprovalResponse: RestaurantApprovalResponse,
+  ): void {
     throw new Error('Method not implemented.');
   }
 
-  orderRejected(restaurantApprovalResponse: RestaurantApprovalResponse): void {
+  public orderRejected(
+    restaurantApprovalResponse: RestaurantApprovalResponse,
+  ): void {
     throw new Error('Method not implemented.');
   }
 }
