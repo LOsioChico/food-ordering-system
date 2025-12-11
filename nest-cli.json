@@ -19,6 +19,15 @@
         "tsConfigPath": "apps/common/tsconfig.app.json"
       }
     },
+    "infrastructure": {
+      "type": "application",
+      "root": "apps/infrastructure",
+      "entryFile": "main",
+      "sourceRoot": "apps/infrastructure/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/infrastructure/tsconfig.app.json"
+      }
+    },
     "order-service": {
       "type": "application",
       "root": "apps/order-service",
