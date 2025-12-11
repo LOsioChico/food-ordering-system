@@ -32,3 +32,7 @@ This cluster should have the following topics:
 
 ## References
 [Microservices: Clean Architecture, DDD, SAGA, Outbox & Kafka (Udemy Course)](https://www.udemy.com/course/microservices-clean-architecture-ddd-saga-outbox-kafka-kubernetes)
+
+## Status
+
+Currently I'm dropping this project because it has a lot of overengineering and I'm not sure if it's worth the effort.
